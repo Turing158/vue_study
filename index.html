@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/1.css">
+        <script src="https://cdn.staticfile.org/vue/3.0.5/vue.global.js"></script>
+        <style>
+            *{
+                margin: 0;
+                padding: 0;
+                color: aliceblue;
+                transition: all 250ms;
+            }
+            body{background-color: rgb(112, 112, 112);
+                display: flex;
+                flex-wrap:wrap;
+                width: 100vw;
+                height: 100vh;
+            }
+            div{
+                border: 1px solid #ffffff;
+                border-radius: 5px;
+                width: 400px;
+                height: 150px;
+                margin: 10px;
+                padding: 10px;
+                overflow: hidden;
+                background-color: #5a5a5a;
+                display: inline-table;
+            }
+            button{
+                background-color: #424242;
+                border: none;
+                border-radius: 5px;
+                padding: 5px 10px;
+                color: aliceblue;
+                font-size: 20px;
+            }
+            button:hover{
+                background-color: #222222;
+            }
+            button:active{
+                background-color: #f3f3f3;
+                color: #222222;
+            }
+            span{
+                color: rgb(176, 248, 176);
+            }
+            input{
+                width: 100px;
+                height: 30px;
+                border: none;
+                border-radius: 5px;
+                background-color: #424242;
+                color: aliceblue;
+                padding-left: 10px;
+                font-size: 18px;
+            }
+            input:focus{
+                outline: none;
+                background-color: #252525;
+            }
+            
+            ul{
+                user-select: none;
+                list-style: none;;
+            }
+            li{
+                color:deepskyblue;
+            }
+            
+        </style>
+    </head>
+    <body>
+
+        <!-- <div style="width: 100%;height: 200px;display: flex;align-items: center;">
+            <div>div样式</div>
+            <button>button样式</button>
+            <span>span样式</span>
+            <input type="text" value="input样式">
+        </div> -->
+
+
+
+        
+        <div class="demo1">
+            {{text1}}
+        </div>
+        <script>
+            const demo1 = {
+                data(){
+                    return{
+                        text1:'hello Vue!'
+                    }
+                }
+            }
+            Vue.createApp(demo1).mount('.demo1');
+            // 这里是第一种写法
+        </script>
+
+
+
+
+
+        <div id="demo2">
+            {{text2}}
+        </div>
+        <script>
+            let demo2 = Vue.createApp({
+                data(){
+                    return{
+                        text2:'demo2 通过{{ 健名 }}绑定数据'
+                    }
+                }
+            }).mount("#demo2");
+            // 这里是第二种写法
+        </script>
+
+
+
+
+
+
+        <div class="demo3">
+            demo3
+            <button @click="count++">count:{{ count }}</button>
+        </div>
+        <script>
+            var demo3 = Vue.createApp({
+                data(){
+                    return{
+                        count: 0
+                    }
+                }
+            }).mount(".demo3");
+        </script>
+
+
+
+
+        <style>
+            .demo4_class{
+                color: antiquewhite;
+            }
+            #demo4_id{
+                color: rgb(248, 176, 176);
+            }
+        </style>
+        <div class="demo4">
+            demo4<br>
+            <span>{{text1}}</span><br>
+            <input style="width: 280px;" type="text" v-model="text2"><br>
+            <span v-bind:class="cl">Demo4 通过v-bind绑定html的属性</span><br>
+            <span :id="id">Demo4 v-bind 也可以直接 :attr</span>
+        </div>
+        <script>
+           let demo4 = Vue.createApp({
+            data(){
+                return{
+                    text1: '!demo4!',
+                    text2: '通过v-model绑定value值的input',
+                    cl: 'demo4_class',
+                    id: 'demo4_id'
+                }
+            }
+           }).mount(".demo4");
+        </script>
+
+
+
+
+
+        
+
+
+
+
+        <div class="demo5">
+            demo5
+            <p v-if="flag">看得到我</p>
+            <p v-else="flag">看不到我</p>
+        </div>
+        <script>
+            let demo5 = Vue.createApp({
+                data(){
+                    return{
+                        flag: true
+                    }
+                }
+            }).mount(".demo5");
+        </script>
+
+
+
+
+
+
+
+
+
+
+
+        <div class="demo6">
+            demo6
+            <ul>
+                <li v-for="i in items" :key="i.id">
+                    {{i.id}}-{{i.text}}
+                </li>
+            </ul>
+           
+            <ul style="position: relative;left: 100px;top: -63.5px;">
+                <li v-for="(t,i) in texts">
+                    {{i}}-{{t.text}}
+                </li>
+            </ul>
+        </div>
+        <script>
+            let demo6 = Vue.createApp({
+                data(){
+                    return{
+                        items:[
+                            {id:1,text:'item1'},
+                            {id:2,text:'item2'},
+                            {id:3,text:'item3'},
+                        ],
+                        texts:[
+                            {id:1,text:'text1'},
+                            {id:2,text:'text2'},
+                            {id:3,text:'text3'},
+                        ]
+                    }
+                }
+            }).mount(".demo6");
+        </script>
+
+
+
+
+
+
+
+        <div class="demo7">
+            demo7<br>
+                                                      <!-- 两种vue的click的方法 -->
+            <button v-on:click="flag = !flag"><span v-if="flag">隐藏</span><span v-else="flag">显示</span></button>
+            <br>
+            <div style="width: 50px;height: 50px;background-color: darkorange;margin: 0;" v-show="flag"></div>
+        </div>
+        <script>
+            let demo7 = Vue.createApp({
+                data(){
+                    return{
+                        flag: true
+                    }
+                }
+            }).mount(".demo7");
+        </script>
+
+
+
+
+
+
+
+        <div class="demo8">
+            demo8<br>
+            <button @click="count++">+</button><br>
+            <span>我会变：{{count}}</span><br>
+            <span v-once>我不变：{{count}}</span>
+        </div>
+        
+        <script>
+            let demo8 = Vue.createApp({
+                data(){
+                    return{
+                        count: 0
+                    }
+                }
+            }).mount(".demo8");
+        </script>
+
+
+
+
+
+
+        <div class="demo9">
+            demo9
+            <p>使用双{}插入&emsp;{{html}}</p><br>
+            <p>使用v-html插值&emsp;<span v-html="html"></span></p>
+        </div>
+        <script>
+            let demo9 = Vue.createApp({
+                data(){
+                    return{
+                        html: '<span style="color: rgb(233, 102, 102);">span标签变红</span>'
+                    }
+                }
+            }).mount(".demo9");
+        </script>
+        
+
+
+
+
+
+        <style>
+            .demo10Class{
+                color: rgb(147, 213, 233);
+                text-decoration: underline;
+            }
+        </style>
+        <div class="demo10">
+            demo10
+            <br>
+            <input type="checkbox" v-model="flag">
+            <p v-bind:class="{'demo10Class' : flag}">v-bind:class运用</p>
+        </div>
+        <script>
+            let demo10 = Vue.createApp({
+                data(){
+                    return{
+                        flag: true
+                    }
+                }
+            }).mount(".demo10");
+        </script>
+
+
+
+
+
+
+        <style>
+            #demo11{
+                color: rgb(233, 147, 222);
+            }
+        </style>
+        <div class="demo11">
+            demo11
+            <br>
+            {{3+3*3}}
+            <br>
+            {{flag ? 'isTrue' : 'isFalse'}}
+            <br>
+            {{text.split('').reverse().join('')}}
+            <br>
+            <span v-bind:id="'demo' + id">demo11</span>
+        </div>
+        <script>
+            let demo11 = Vue.createApp({
+                data(){
+                    return{
+                        flag: true,
+                        text: 'ABCDEFG',
+                        id: 11
+                    }
+                }
+            }).mount(".demo11");
+        </script>
+        
+
+
+
+
+
+        <div class="demo12">
+            demo12
+            <br>
+            <span>{{text}}</span>
+            <br>
+            <button v-on:click="reverse">两极反转</button>
+        </div>
+        <script>
+            let demo12 = Vue.createApp({
+                data(){
+                    return{
+                        text: 'ABCDEFG'
+                    }
+                },
+                methods:{
+                    reverse(){
+                        this.text = this.text.split('').reverse().join('');
+                    }
+                }
+            }).mount(".demo12");
+        </script>
+
+
+
+
+        <div class="demo13">
+            demo13
+            <br>
+            <span v-if="num == 0">num等于0</span>
+            <span v-else-if="num > 0">num大于0</span>
+            <span v-else>num小于0</span>
+            <br>
+            <span>{{num}}</span>
+            <br>
+            <button @click="random">Random</button>
+        </div>
+        <script>
+            let demo13 = Vue.createApp({
+                data(){
+                    return{
+                        num: 0
+                    }
+                },
+                methods:{
+                    random(){
+                        this.num = Math.random()*4 -2;
+                    }
+                }
+            }).mount(".demo13");
+        </script>
+
+
+
+
+
+
+
+
+
+        <div class="demo14">
+            <span>{{text}}</span>
+            <br>
+            <demo14></demo14>
+        </div>
+        <script>
+            let demo14 = Vue.createApp({
+                data(){
+                    return{
+                        text: 'demo14'
+                    }
+                }
+            });
+            demo14.component('demo14',{
+                data(){
+                    return{
+                        count: 0
+                    }
+                },
+                template: '<button @click="count++">+</button>'+
+                            '<span>=>{{count}}<=</span>'+
+                            '<button @click="count--">-</button>'
+            })
+            demo14.mount(".demo14");
+        </script>
+
+
+
+
+        <div class="demo15">
+            <span>{{text}}</span>
+            <br>
+            <c1></c1>
+            <c2></c2>
+            <c3></c3>
+        </div>
+        <script>
+            
+            let C1 = {
+                template: '<span>我是组件1</span>'
+            }
+            let C2 = {
+                template: '<p style="color: rgb(233, 147, 222);">我是组件2</p>'
+            }
+            let C3 = {
+                data(){
+                    return{
+                        count: 0
+                    }
+                },
+                template: '<button @click="count++">我是组件3 :{{count}}</button>'
+            }
+            let demo15 = Vue.createApp({
+                data(){
+                    return{
+                        text: 'demo15'
+                    }
+                },
+                components:{
+                    'c1': C1,
+                    'c2': C2
+                }
+            });
+            demo15.component('c3',C3);
+            demo15.mount(".demo15");
+        </script>
+
+
+
+
+
+        <div class="demo16">
+            demo16
+            <com text="Demo16"></com>
+            <com text="通过props"></com>
+            <com text="改变属性"></com>
+        </div>
+        <script>
+            let demo16 = Vue.createApp({});
+            demo16.component('com',{
+                props:['text'],
+                template: '<h3>{{text}}</h3>'
+            });
+            demo16.mount(".demo16");
+        </script>
+
+
+
+
+
+        <div class="demo17">
+            demo17
+            <ul>
+                <com v-for="i in items" :id="i.id" :item="i.text"></com>
+            </ul>
+        </div>
+        <script>
+            let demo17 = Vue.createApp({
+                data(){
+                    return{
+                        items:[
+                            {id:1,text:'item1'},
+                            {id:2,text:'item2'},
+                            {id:3,text:'item3'}
+                        ]
+                    }
+                }
+            });
+            demo17.component('com',{
+                props:['id','item'],
+                template: '<li>{{id}}:{{item}}</li>'
+            });
+            demo17.mount(".demo17");
+            
+        </script>
+
+
+
+
+
+
+
+
+
+        <div class="demo18">
+            demo18
+            <br>
+            原：{{text}}
+            <br>
+            反：{{reverseText}}
+        </div>
+        <script>
+            let demo18 = Vue.createApp({
+                data(){
+                    return{
+                        text: 'ABCDEFG'
+                    }
+                },
+                computed:{
+                    reverseText(){
+                        return this.text.split('').reverse().join('');
+                    }
+                }
+            });
+            demo18.mount(".demo18");
+        </script>
+
+
+
+
+        <div class="demo19">
+            demo19
+            <br>
+            普通：{{text}}
+            <br>
+        </div>
+        <script>
+            let demo19 = Vue.createApp({
+                data(){
+                    return{
+                        id:1,
+                        text: 'ABCDEFG'
+                    }
+                },
+                computed:{
+                    com:{
+                        get:function(){
+                            return this.id+'-'+this.text;
+                        },
+                        set:function(value){
+                            this.text = value;
+                        }
+                    }
+                }
+            }).mount(".demo19");
+            document.querySelector('.demo19').insertAdjacentHTML('beforeend','只get：'+demo19.com+'<br>');
+            demo19.com = '123';
+            document.querySelector('.demo19').insertAdjacentHTML('beforeend','set后get：'+demo19.com+'<br>');
+            document.querySelector('.demo19').insertAdjacentHTML('beforeend','直接使用{{com}}也是set后get');
+        </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="demo20">
+            demo20 输入监测
+            <br>
+            <input type="text" v-model="input">
+            <br>
+            <span>{{text}}</span>
+        </div>
+        <script>
+            let demo20 = Vue.createApp({
+                data(){
+                    return{
+                        input:'',
+                        text: '你输入了:'
+                    }
+                }
+            }).mount(".demo20");
+            demo20.$watch('input',function(newv,oldv){
+                demo20.text = '你输入了:' + newv;
+            })
+        </script>
+
+
+
+
+        <div class="demo21">
+            demo21
+            <br>
+            千米 -> 米 -> 千米
+            <br>
+            千米: <input type="text" v-model="k" @focus="flag = 'kilo'">
+            <br>
+            米&emsp;: <input type="text" v-model="m" @focus="flag = 'meter'">
+            <br>
+            <span>{{text}}</span>
+        </div>
+        <script>
+            let demo21 = Vue.createApp({
+                data(){
+                    return{
+                        k:0,
+                        m:0,
+                        text:'千米<=>米'
+                    }
+                },
+                watch:{
+                    k:function(value){
+                        if(this.flag === 'kilo'){
+                            this.m = value * 1000;
+                            this.k = value;
+                        }
+                    },
+                    m:function(newv,oldv){
+                        if(this.flag === 'meter'){
+                            this.k = newv / 1000;
+                            this.m = newv;
+                        }
+                    }
+                }
+            }).mount('.demo21');
+            demo21.$watch('k',function(newv,oldv){
+                demo21.text = newv + '千米 => ' + demo21.m + '米';
+            })
+            demo21.$watch('m',function(newv,oldv){
+                demo21.text = newv + '千米 <= ' + demo21.k + '米';
+            });
+        </script>
+
+
+
+
+
+
+
+
+        <div class="demo22">
+            demo22
+            <br>
+            只能左键点击
+            <button @click.letf="count1++">count1:{{count1}}</button>
+            <br>
+            只能右键点击
+            <button @click.right="count2++">count2:{{count2}}</button>
+            <br>
+            只能滚轮点击
+            <button @click.middle="count3++">count3:{{count3}}</button>
+            <br>
+            只能触发一次
+            <button @click.once="count4++">count4:{{count4}}</button>
+        </div>
+        <script>
+            let demo22 = Vue.createApp({
+                data(){
+                    return{
+                        count1: 0,
+                        count2: 0,
+                        count3: 0,
+                        count4: 0
+                    }
+                }
+            }).mount('.demo22');
+        </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="demo23">
+            demo23
+             只有在button里面才会回调,点div+，点按钮-
+            <br>
+            click事件没有.self<div style="width: 100px;height: 30px;margin: 5px;" @click="count1++"><button @click="count1--">-</button>&emsp;{{count1}}</div>click范围包含按钮
+            <br>
+            click事件&emsp;有.self<div style="width: 100px;height: 30px;margin: 5px;" @click.self="count2++"><button @click="count2--">-</button>&emsp;{{count2}}</div>click范围不含按钮
+        </div>
+        <script>
+            let demo23 = Vue.createApp({
+                data(){
+                    return{
+                        count1: 0,
+                        count2: 0,
+                        count3: 0
+                    }
+                }
+            }).mount('.demo23');
+        </script>
+
+
+
+
+
+        
+
+
+
+
+        <div class="demo24">
+            demo24
+            <br>
+            只要按住ctrl就能点<button @click.ctrl="count1++">count1:{{count1}}</button>
+            <br>
+            只有按住ctrl就能点<button @click.ctrl.exact="count2++">count2:{{count2}}</button>
+        </div>
+        <script>
+            let demo24 = Vue.createApp({
+                data(){
+                    return{
+                        count1: 0,
+                        count2: 0,
+                        count3: 0
+                    }
+                }
+            }).mount('.demo24');
+        </script>
+    </body>
+    
+</html>
